@@ -2,10 +2,7 @@ package edu.utexas.cycic;
 
 import java.util.ArrayList;
 
-import edu.utah.sci.cyclist.event.dnd.DnD;
 import edu.utah.sci.cyclist.ui.components.ViewBase;
-import edu.utah.sci.cyclist.ui.tools.Tool;
-import edu.utexas.cycic.tools.RegionViewTool;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -20,13 +17,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * A View Class for generating the form required for interacting with a Cyclus region.
@@ -39,7 +34,6 @@ public class RegionView extends ViewBase{
 	 */
 	public RegionView(){
 		super();
-		workingRegion = RegionCorralView.workingRegion;
 		// Facility list view for available facilities list of the region
 		final ListView<String> facilityList = new ListView<String>();
 		facilityList.setOrientation(Orientation.VERTICAL);
@@ -89,6 +83,8 @@ public class RegionView extends ViewBase{
 					workingRegion.regionStruct = (ArrayList<Object>) CycicScenarios.workingCycicScenario.regionStructs.get(0);
 					FormBuilderFunctions.formArrayBuilder(workingRegion.regionStruct, workingRegion.regionData);
 					formBuilder(workingRegion.regionStruct, workingRegion.regionData);
+					regionNode.regionCircle = RegionShape.addRegion("", workingRegion);
+					RegionCorralView.corralPane.getChildren().addAll(regionNode.regionCircle, regionNode.regionCircle.menuBar, regionNode.regionCircle.text);
 				} else {
 					rowNumber = 0;
 					grid.getChildren().clear();
@@ -198,19 +194,10 @@ public class RegionView extends ViewBase{
 		setContent(regionBox);
 		setPrefSize(600,400);
 		
-		regionNode.regionCircle.setOnDragDetected(new EventHandler<MouseEvent>(){
-			@Override
-			public void handle(MouseEvent regionViewCreate){
-				if(regionViewCreate.isShiftDown() == true){
+		formBuilder(workingRegion.regionStruct, workingRegion.regionData);
 
-				} else {
-					formBuilder(workingRegion.regionStruct, workingRegion.regionData);
-				}
-			}
-		});
-		
-		regionNode.regionCircle.institutionList = institList;
-		regionNode.regionCircle.facilityList = facilityList;
+		//regionNode.regionCircle.institutionList = institList;
+		//regionNode.regionCircle.facilityList = facilityList;
 		
 	}
 	
@@ -224,6 +211,7 @@ public class RegionView extends ViewBase{
 	private int columnEnd = 0;
 	private int userLevel = 0;
 	static regionNode workingRegion;
+
 	/**
 	 * This function takes a constructed data array and it's corresponding facility structure array and creates
 	 * a form in for the structure and data array and facility structure.
@@ -333,6 +321,8 @@ public class RegionView extends ViewBase{
 			}
 		}
 	}
+	
+	
 	
 	/**
 	 * Function to add an orMore button to the form. This button allows the user to add additional fields to zeroOrMore or oneOrMore form inputs.

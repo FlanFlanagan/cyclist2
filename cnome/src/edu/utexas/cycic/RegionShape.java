@@ -2,11 +2,8 @@ package edu.utexas.cycic;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.runtime.Name;
-
 import edu.utah.sci.cyclist.event.dnd.DnD;
 import edu.utah.sci.cyclist.ui.tools.Tool;
-import edu.utexas.cycic.tools.FormBuilderTool;
 import edu.utexas.cycic.tools.RegionViewTool;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -48,17 +45,18 @@ public class RegionShape extends Circle {
 	ListView<String> facilityList = new ListView<String>();
 	ListView<String> institutionList = new ListView<String>();
 
-	static RegionShape addRegion(final String name) {
-		final RegionShape circle = new RegionShape(){
-			{
-				setRadius(25);
-			}
-		};
+	static RegionShape addRegion(final String name, final regionNode region) {
+		final RegionShape circle = new RegionShape();
+		
+		// Set properties of regionNode
+		region.name = name;
+		
+		circle.setRadius(40);
 		circle.setCenterX(50);
 		circle.setCenterY(50);
 		circle.setStroke(Color.DARKGRAY);
 		circle.setStrokeWidth(3);
-
+		
 		circle.name = name;
 		circle.text = new Text(name);
 		circle.text.setX(circle.getCenterX()-circle.getRadius()*0.7);
@@ -66,7 +64,7 @@ public class RegionShape extends Circle {
 		circle.text.setWrappingWidth(circle.getRadius()*1.6);
 		circle.text.setMouseTransparent(true);
 		circle.text.setFont(new Font(14));
-
+		
 		// Set circle color
 		circle.rgbColor=VisFunctions.stringToColor((String)circle.name);
 		circle.setFill(Color.rgb(circle.rgbColor.get(0), circle.rgbColor.get(1), circle.rgbColor.get(2)));
@@ -90,14 +88,14 @@ public class RegionShape extends Circle {
 
 		MenuItem regionForm = new MenuItem("Region Form");
 
-//		deleteEvent not working
-//		EventHandler deleteEvent = new EventHandler<ActionEvent>() {
-//			public void handle(ActionEvent deleteEvent) {
-//				deleteRegion(circle);
-//			}
-//		};
+		// deleteEvent not working
+		EventHandler deleteEvent = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent deleteEvent) {
+				deleteRegion(circle, region);
+			}
+		};
 		MenuItem delete = new MenuItem("Delete");
-//		delete.setOnAction(deleteEvent);
+		delete.setOnAction(deleteEvent);
 
 		EventHandler exitEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent exitEvent) {
@@ -131,6 +129,9 @@ public class RegionShape extends Circle {
 			@Override
 			public void handle(MouseEvent regionViewEvent){
 				if(regionViewEvent.isShiftDown() == true){
+
+					RegionView.workingRegion = region;
+					
 					DnD.LocalClipboard clipboard = DnD.getInstance().createLocalClipboard();
 					clipboard.put(DnD.TOOL_FORMAT, Tool.class, new RegionViewTool());
 					
@@ -143,14 +144,14 @@ public class RegionShape extends Circle {
 				}
 			}
 		});
-
+		
 		return circle;	
 	};
 
-//	static void deleteRegion(RegionShape circle){
-//		CycicScenarios.workingCycicScenario.regionNodes.remove(circle);
-//		VisFunctions.reloadPane();
-//	};
+	static void deleteRegion(RegionShape circle, regionNode region){
+		CycicScenarios.workingCycicScenario.regionNodes.remove(region);
+		RegionCorralView.corralPane.getChildren().removeAll(circle, circle.menuBar, circle.text);
+	};
 
 	{	
 

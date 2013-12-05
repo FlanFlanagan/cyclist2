@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 /**
  * This class is built to handle all of the functions used in building the forms for CYCIC. 
@@ -137,6 +138,9 @@ public class FormBuilderFunctions {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue){
 				node.name = (String) newValue;
 				dataArray.set(0, newValue);
+				node.regionCircle.name.equals(newValue);
+				node.regionCircle.text.setText(newValue);
+//				node.regionCircle.rgbColor
 			}
 		});
 		return textField;
