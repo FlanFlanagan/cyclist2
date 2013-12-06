@@ -90,6 +90,7 @@ public class RegionView extends ViewBase{
 					grid.getChildren().clear();
 					facilityList.getItems().clear();
 					workingRegion = CycicScenarios.workingCycicScenario.regionNodes.get(structureCB.getItems().indexOf(newValue));
+					RegionCorralView.workingRegion = DataArrays.regionNodes.get(structureCB.getItems().indexOf(newValue));
 					for(int i = 0; i < workingRegion.availFacilities.size(); i++){
 						facilityList.getItems().add(workingRegion.availFacilities.get(i));
 					}
@@ -200,7 +201,6 @@ public class RegionView extends ViewBase{
 		//regionNode.regionCircle.facilityList = facilityList;
 		
 	}
-	
 	
 	private ComboBox<String> structureCB = new ComboBox<String>();
 	private GridPane grid = new GridPane();

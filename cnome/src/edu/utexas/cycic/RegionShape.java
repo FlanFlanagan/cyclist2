@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
 
 /**
  * This class extends the Java Circle class. Used to represent a region
- * on the CYCIC pane and contains all of the information associated with
+ * in the RegionCorralView and contains all of the information associated with
  * the region.
  * @author birdybird
  *
@@ -44,9 +44,14 @@ public class RegionShape extends Circle {
 	ArrayList<Integer> rgbColor = new ArrayList<Integer>();
 	ListView<String> facilityList = new ListView<String>();
 	ListView<String> institutionList = new ListView<String>();
+	{
+		setId("this");
+	}
 
 	static RegionShape addRegion(final String name, final regionNode region) {
 		final RegionShape circle = new RegionShape();
+		
+		RegionCorralView.workingRegion = region;
 		
 		// Set properties of regionNode
 		region.name = name;
@@ -55,7 +60,7 @@ public class RegionShape extends Circle {
 		circle.setCenterX(50);
 		circle.setCenterY(50);
 		circle.setStroke(Color.DARKGRAY);
-		circle.setStrokeWidth(3);
+		circle.setStrokeWidth(5);
 		
 		circle.name = name;
 		circle.text = new Text(name);
@@ -75,21 +80,14 @@ public class RegionShape extends Circle {
 		}else{
 			circle.text.setFill(Color.WHITE);
 		}
-		for(int i = 0; i < Cycic.pane.getChildren().size(); i++){
-			if(Cycic.pane.getChildren().get(i).getId() == "cycicNode"){
-				((Shape) Cycic.pane.getChildren().get(i)).setStroke(Color.BLACK);
-				((Shape) Cycic.pane.getChildren().get(i)).setStrokeWidth(1);
-			}
-		}
+		
 		circle.setEffect(VisFunctions.lighting);
-
 
 		//Adding the circle's menu and its functions.
 
 		MenuItem regionForm = new MenuItem("Region Form");
 
-		// deleteEvent not working
-		EventHandler deleteEvent = new EventHandler<ActionEvent>() {
+		EventHandler<ActionEvent> deleteEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent deleteEvent) {
 				deleteRegion(circle, region);
 			}
@@ -97,7 +95,7 @@ public class RegionShape extends Circle {
 		MenuItem delete = new MenuItem("Delete");
 		delete.setOnAction(deleteEvent);
 
-		EventHandler exitEvent = new EventHandler<ActionEvent>() {
+		EventHandler<ActionEvent> exitEvent = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent exitEvent) {
 				circle.menuBar.setVisible(false);
 			}
@@ -121,6 +119,18 @@ public class RegionShape extends Circle {
 					circle.menuBar.setLayoutX(circle.getCenterX());
 					circle.menuBar.setLayoutY(circle.getCenterY());
 				}
+				
+				for(int i = 0; i < RegionCorralView.corralPane.getChildren().size(); i++){
+					if(RegionCorralView.corralPane.getChildren().get(i).getId() == "this"){
+						((Shape) RegionCorralView.corralPane.getChildren().get(i)).setStroke(Color.BLACK);
+						((Shape) RegionCorralView.corralPane.getChildren().get(i)).setStrokeWidth(1);
+					}
+				}
+				
+				circle.setEffect(VisFunctions.lighting);
+				circle.setStrokeWidth(5);
+				circle.setStroke(Color.DARKGRAY);
+				
 			}
 		});
 		
@@ -149,7 +159,7 @@ public class RegionShape extends Circle {
 	};
 
 	static void deleteRegion(RegionShape circle, regionNode region){
-		CycicScenarios.workingCycicScenario.regionNodes.remove(region);
+		DataArrays.regionNodes.remove(region);
 		RegionCorralView.corralPane.getChildren().removeAll(circle, circle.menuBar, circle.text);
 	};
 

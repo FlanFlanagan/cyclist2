@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 /**
@@ -132,6 +134,7 @@ public class FormBuilderFunctions {
 	 */
 	static TextField regionNameBuilder(final regionNode node, final ArrayList<Object> dataArray){
 		TextField textField = new TextField();
+		RegionCorralView.workingRegion = node;
 		textField.setText((String) node.name);
 		
 		textField.textProperty().addListener(new ChangeListener<String>(){         
@@ -140,7 +143,14 @@ public class FormBuilderFunctions {
 				dataArray.set(0, newValue);
 				node.regionCircle.name.equals(newValue);
 				node.regionCircle.text.setText(newValue);
-//				node.regionCircle.rgbColor
+				node.regionCircle.rgbColor = VisFunctions.stringToColor(newValue);
+				node.regionCircle.setFill(Color.rgb(node.regionCircle.rgbColor.get(0), node.regionCircle.rgbColor.get(1), node.regionCircle.rgbColor.get(2)));
+				// Setting font color for visibility //
+				if(VisFunctions.colorTest(node.regionCircle.rgbColor) == true){
+					node.regionCircle.text.setFill(Color.BLACK);
+				}else{
+					node.regionCircle.text.setFill(Color.WHITE);
+				}
 			}
 		});
 		return textField;
