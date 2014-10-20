@@ -299,11 +299,18 @@ public class Cycic extends ViewBase{
 				for()
 			}
 		});
-		/*opSwitch.getToggles().addAll(localToggle, remoteToggle);
-		localToggle.setSelected(true);
+
+        opSwitch.getToggles().addAll(localToggle, remoteToggle);
+        try {
+            Process readproc = Runtime.getRuntime().exec("cyclus -V");
+            BufferedReader schema = new BufferedReader(new InputStreamReader(readproc.getInputStream()));
+            localToggle.setSelected(true);
+        } catch (RuntimeException e) {
+            localToggle.setSelected(false);
+        };
 		grid.add(localToggle, 7, 0);
 		grid.add(remoteToggle, 8, 0);
-		*/
+        
 		cycicBox.getChildren().addAll(grid, scroll, pane);
 		
 		HBox mainView = new HBox(){
@@ -334,9 +341,9 @@ public class Cycic extends ViewBase{
 	public void retrieveSchema(){
 		try {
 			String string;
-			Process readproc = Runtime.getRuntime().exec("cyclus -a");
-			
-			BufferedReader schema = new BufferedReader(new InputStreamReader(readproc.getInputStream()));
+            Process readproc = Runtime.getRuntime().exec("cyclus -a");
+            
+            BufferedReader schema = new BufferedReader(new InputStreamReader(readproc.getInputStream()));
 			Object[] schemaLines = schema.lines().toArray();
 			schema.close();
 			DataArrays.simFacilities.clear();
