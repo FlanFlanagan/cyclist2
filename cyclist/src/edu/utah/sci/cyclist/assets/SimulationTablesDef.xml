@@ -155,52 +155,23 @@
 			<field name="Time">
 				<datatype role="INT_TIME" type="INT_TIME"/>
 			</field>
-			<field name="AgentID" semantic="AgentID">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="Prototype" >
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>
-			<field name="Kind">
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>>
-			<field name="Spec">
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>	
-			<field name="NucID" semantic="Nuclide">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="Quantity"> 
+			<field name="Quantity" >
 				<datatype role="MEASURE" type="NUMERIC"/>
 			</field>
-		</Schema>
-	</Table>
-	
-	<Table name="QuantityInventoryPerYear">
-		<Schema>
-			<field name="SimID" >
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>
-			<field name="Year">
-				<datatype role="INT_TIME" type="INT_TIME"/>
+			<field name="NucID" semantic="Nuclide">
+				<datatype role="DIMENSION" type="NUMERIC"/>
 			</field>
 			<field name="AgentID" semantic="AgentID">
 				<datatype role="DIMENSION" type="NUMERIC"/>
 			</field>
-			<field name="Prototype" >
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>
 			<field name="Kind">
 				<datatype role="DIMENSION" type="TEXT"/>
-			</field>>
+			</field>
 			<field name="Spec">
 				<datatype role="DIMENSION" type="TEXT"/>
-			</field>	
-			<field name="NucID" semantic="Nuclide">
-				<datatype role="DIMENSION" type="NUMERIC"/>
 			</field>
-			<field name="Quantity"> 
-				<datatype role="MEASURE" type="NUMERIC"/>
+			<field name="Prototype" >
+				<datatype role="DIMENSION" type="TEXT"/>
 			</field>
 		</Schema>
 	</Table>
@@ -213,46 +184,23 @@
 			<field name="Time">
 				<datatype role="INT_TIME" type="INT_TIME"/>
 			</field>
-			<field name="SenderID" semantic="AgentID">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="ReceiverID" semantic="AgentID">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="Commodity" >
-				<datatype role="DIMENSION" type="TEXT"/>
+			<field name="Quantity" >
+				<datatype role="MEASURE" type="NUMERIC"/>
 			</field>
 			<field name="NucID" semantic="Nuclide">
 				<datatype role="DIMENSION" type="NUMERIC"/>
 			</field>
-			<field name="Quantity" >
-				<datatype role="MEASURE" type="NUMERIC"/>
+			<field name="AgentID" semantic="AgentID">
+				<datatype role="DIMENSION" type="NUMERIC"/>
 			</field>
-		</Schema>
-	</Table>
-	
-	<Table name="QuantityTransactedPerYear">
-		<Schema>
-			<field name="SimID" >
+			<field name="Kind">
 				<datatype role="DIMENSION" type="TEXT"/>
 			</field>
-			<field name="Year">
-				<datatype role="INT_TIME" type="INT_TIME"/>
-			</field>
-			<field name="SenderID" semantic="AgentID">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="ReceiverID" semantic="AgentID">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="Commodity" >
+			<field name="Spec">
 				<datatype role="DIMENSION" type="TEXT"/>
 			</field>
-			<field name="NucID" semantic="Nuclide">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-			<field name="Quantity" >
-				<datatype role="MEASURE" type="NUMERIC"/>
+			<field name="Prototype" >
+				<datatype role="DIMENSION" type="TEXT"/>
 			</field>
 		</Schema>
 	</Table>
@@ -425,29 +373,6 @@
 			<field name="SimID">
 				<datatype role="DIMENSION" type="TEXT"/>
 			</field>
-			<field name="StartTime">
-				<datatype role="INT_TIME" type="INT_TIME"/>
-			</field>
-			<field name="EndTime">
-				<datatype role="INT_TIME" type="INT_TIME"/>
-			</field>
-			<field name="Quantity">
-				<datatype role="MEASURE" type="NUMERIC"/>
-			</field>
-			<field name="Prototype">
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>	
-			<field name="NucID" semantic="Nuclide">
-				<datatype role="DIMENSION" type="NUMERIC"/>
-			</field>
-		</Schema>
-	</Table>
-	
-	<Table name="InventoryDetailsPerMonth">
-		<Schema>
-			<field name="SimID">
-				<datatype role="DIMENSION" type="TEXT"/>
-			</field>
 			<field name="Time">
 				<datatype role="INT_TIME" type="INT_TIME"/>
 			</field>
@@ -462,6 +387,7 @@
 			</field>
 		</Schema>
 	</Table>
+	
 <!-- Per Year -->
 
 	<Table name="BuiltPerYear">
